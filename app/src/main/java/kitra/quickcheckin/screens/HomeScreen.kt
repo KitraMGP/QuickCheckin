@@ -53,7 +53,9 @@ fun ShowHomeScreen() {
 @Composable
 fun ComposableHomeScreen(navController: NavController) {
 
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)) {
         TopAppBar(
             title = { Text("请选择签到班级") },
             navigationIcon = {
@@ -88,13 +90,23 @@ fun ComposableHomeScreen(navController: NavController) {
                 Text(
                     text = "数据结构-计科[1-4]班",
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 16.dp, bottom = 8.dp),
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 16.dp,
+                        end = 16.dp,
+                        bottom = 8.dp
+                    ),
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     text = "34人",
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.padding(start = 16.dp, top = 0.dp, end = 16.dp, bottom = 16.dp)
+                    modifier = Modifier.padding(
+                        start = 16.dp,
+                        top = 0.dp,
+                        end = 16.dp,
+                        bottom = 16.dp
+                    )
                 )
             }
         }

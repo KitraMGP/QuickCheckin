@@ -78,7 +78,8 @@ fun PrepareScreen(navController: NavController) {
             onClick = { /*TODO*/ },
             icon = { Icon(Icons.Default.Check, "确认") },
             text = { Text("开始签到") },
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
                 .padding(vertical = 50.dp)
         )
     }
