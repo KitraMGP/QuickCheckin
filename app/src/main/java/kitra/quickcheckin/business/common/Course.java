@@ -6,40 +6,40 @@ import java.util.List;
 import java.util.Set;
 
 public class Course {
+    private final Set<Student> studentSet;
     private String name;
     private String id;
-    private Set<Student> studentList;
 
     public Course(String name, String id) {
         this.name = name;
         this.id = id;
-        this.studentList = new HashSet<>();
+        this.studentSet = new HashSet<>();
     }
 
-    public Course(String name, String id, Set<Student> studentList) {
+    public Course(String name, String id, Set<Student> studentSet) {
         this.name = name;
         this.id = id;
-        this.studentList = studentList;
+        this.studentSet = studentSet;
     }
 
     public int getStudentCount() {
-        return studentList.size();
+        return studentSet.size();
     }
 
     public boolean hasStudent(String id) {
-        return studentList.stream().anyMatch(student -> student.getId().equals(id));
+        return studentSet.stream().anyMatch(student -> student.getId().equals(id));
     }
 
     public boolean addStudent(Student s) {
-        return studentList.add(s);
+        return studentSet.add(s);
     }
 
     public boolean removeStudent(String id) {
-        return studentList.removeIf(student -> student.getId().equals(id));
+        return studentSet.removeIf(student -> student.getId().equals(id));
     }
 
     public List<Student> getStudents() {
-        return new ArrayList<>(this.studentList);
+        return new ArrayList<>(this.studentSet);
     }
 
     public String getName() {
