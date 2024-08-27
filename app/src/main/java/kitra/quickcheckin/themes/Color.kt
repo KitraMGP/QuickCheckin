@@ -1,4 +1,4 @@
-package kitra.quickcheckin.ui.theme
+package kitra.quickcheckin.themes
 
 import androidx.compose.ui.graphics.Color
 

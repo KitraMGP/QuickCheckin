@@ -1,4 +1,4 @@
-package kitra.quickcheckin.ui.theme
+package kitra.quickcheckin.themes
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
