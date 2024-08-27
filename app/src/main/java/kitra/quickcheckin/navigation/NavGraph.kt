@@ -1,17 +1,11 @@
 package kitra.quickcheckin.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kitra.quickcheckin.screens.PrepareScreen
 import kitra.quickcheckin.screens.ComposableHomeScreen
+import kitra.quickcheckin.screens.PrepareScreen
 
 @Composable
 fun NavGraph(startDestination: String) {
@@ -23,14 +17,17 @@ fun NavGraph(startDestination: String) {
         /*enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None }*/
     ) {
-        composable("home",
+        composable(
+            "home",
             /*enterTransition = {
                 fadeIn(animationSpec = tween(durationMillis = 1000))
             },
             exitTransition = {
                 fadeOut(animationSpec = tween(durationMillis = 1000))
-            }*/) { ComposableHomeScreen(navController) }
-        composable("prepare",
+            }*/
+        ) { ComposableHomeScreen(navController) }
+        composable(
+            "prepare",
             /*popEnterTransition = {
                 fadeIn(animationSpec = tween(1000)) +
                 slideIntoContainer(animationSpec = tween(1000), towards = AnimatedContentTransitionScope.SlideDirection.Start)
@@ -38,6 +35,7 @@ fun NavGraph(startDestination: String) {
             popExitTransition = {
                 fadeOut(animationSpec = tween(1000)) +
                 slideOutOfContainer(animationSpec = tween(1000), towards = AnimatedContentTransitionScope.SlideDirection.End)
-            }*/) { PrepareScreen(navController) }
+            }*/
+        ) { PrepareScreen(navController) }
     }
 }
