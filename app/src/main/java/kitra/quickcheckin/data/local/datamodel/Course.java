@@ -16,7 +16,7 @@ public class Course {
     @ColumnInfo(name = "name")
     private String name;
 
-    public Course(String name, String id) {
+    public Course(String name, @NonNull String id) {
         this.name = name;
         this.id = id;
         //this.studentSet = new HashSet<>();
@@ -56,11 +56,12 @@ public class Course {
         this.name = name;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 }

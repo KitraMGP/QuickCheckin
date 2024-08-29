@@ -21,24 +21,26 @@ public class CourseStudent {
     @NonNull
     private String studentId;
 
-    public CourseStudent(String courseId, String studentId) {
+    public CourseStudent(@NonNull String courseId, @NonNull String studentId) {
         this.courseId = courseId;
         this.studentId = studentId;
     }
 
+    @NonNull
     public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(String courseId) {
+    public void setCourseId(@NonNull String courseId) {
         this.courseId = courseId;
     }
 
+    @NonNull
     public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(@NonNull String studentId) {
         this.studentId = studentId;
     }
 }

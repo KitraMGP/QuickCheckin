@@ -16,7 +16,7 @@ public class Student {
     @ColumnInfo(name = "name")
     private String name;
 
-    public Student(String name, String id) {
+    public Student(String name, @NonNull String id) {
         this.name = name;
         this.id = id;
     }
@@ -29,11 +29,12 @@ public class Student {
         this.name = name;
     }
 
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 //
