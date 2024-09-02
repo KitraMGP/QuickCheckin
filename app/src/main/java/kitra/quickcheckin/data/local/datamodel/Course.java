@@ -5,48 +5,26 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Courses")
+@Entity(tableName = "Course")
 public class Course {
-    //private final Set<Student> studentSet;
     @PrimaryKey
-    @ColumnInfo(name = "id")
-    @NonNull
-    private String id;
+    private int uniqueId;
 
-    @ColumnInfo(name = "name")
+    @NonNull
     private String name;
 
-    public Course(String name, @NonNull String id) {
+    public Course(int uniqueId, @NonNull String name) {
+        this.uniqueId = uniqueId;
         this.name = name;
-        this.id = id;
-        //this.studentSet = new HashSet<>();
     }
 
-//    public Course(String name, String id, Set<Student> studentSet) {
-//        this.name = name;
-//        this.id = id;
-//        this.studentSet = studentSet;
-//    }
+    public int getUniqueId() {
+        return uniqueId;
+    }
 
-//    public int getStudentCount() {
-//        return studentSet.size();
-//    }
-//
-//    public boolean hasStudent(String id) {
-//        return studentSet.stream().anyMatch(student -> student.getId().equals(id));
-//    }
-//
-//    public boolean addStudent(Student s) {
-//        return studentSet.add(s);
-//    }
-//
-//    public boolean removeStudent(String id) {
-//        return studentSet.removeIf(student -> student.getId().equals(id));
-//    }
-//
-//    public List<Student> getStudents() {
-//        return new ArrayList<>(this.studentSet);
-//    }
+    public void setUniqueId(int uniqueId) {
+        this.uniqueId = uniqueId;
+    }
 
     public String getName() {
         return name;
@@ -57,11 +35,11 @@ public class Course {
     }
 
     @NonNull
-    public String getId() {
-        return id;
-    }
-
-    public void setId(@NonNull String id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Course{" +
+                "uniqueId=" + uniqueId +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

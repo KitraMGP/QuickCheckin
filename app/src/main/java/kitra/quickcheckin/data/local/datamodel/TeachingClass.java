@@ -1,24 +1,21 @@
 package kitra.quickcheckin.data.local.datamodel;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Student")
-public class Student {
+@Entity(tableName = "TeachingClass")
+public class TeachingClass {
     @PrimaryKey
     private int uniqueId;
-
-    @NonNull
-    private String number;
+    private int courseId;
 
     @NonNull
     private String name;
 
-    public Student(int uniqueId, @NonNull String number, @NonNull String name) {
+    public TeachingClass(int uniqueId, int courseId, @NonNull String name) {
         this.uniqueId = uniqueId;
-        this.number = number;
+        this.courseId = courseId;
         this.name = name;
     }
 
@@ -30,12 +27,12 @@ public class Student {
         this.uniqueId = uniqueId;
     }
 
-    public String getNumber() {
-        return number;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     public String getName() {
@@ -49,9 +46,9 @@ public class Student {
     @NonNull
     @Override
     public String toString() {
-        return "Student{" +
+        return "TeachingClass{" +
                 "uniqueId=" + uniqueId +
-                ", number='" + number + '\'' +
+                ", courseId=" + courseId +
                 ", name='" + name + '\'' +
                 '}';
     }
