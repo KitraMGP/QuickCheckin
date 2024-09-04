@@ -34,7 +34,7 @@ import androidx.navigation.compose.rememberNavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PrepareScreen(navController: NavController) {
+fun ComposablePrepareScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
         TopAppBar(
             title = { Text("请确认签到信息") },
@@ -103,14 +103,10 @@ fun PrepareScreen(navController: NavController) {
                 .padding(vertical = 50.dp)
         )
     }
-
-
-
-
 }
 
 @Preview
 @Composable
-private fun PreviewPrepareScreen() {
-    PrepareScreen(rememberNavController())
+private fun Preview() {
+    ComposablePrepareScreen(rememberNavController())
 }

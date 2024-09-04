@@ -1,24 +1,20 @@
 package kitra.quickcheckin.screens
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,7 +22,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,37 +30,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import kitra.quickcheckin.themes.MyApplicationTheme
-
-class HomeScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        setContent {
-            MyApplicationTheme {
-                ShowHomeScreen()
-            }
-        }
-    }
-}
-
-@Composable
-fun ShowHomeScreen() {
-    ComposableHomeScreen(rememberNavController())
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComposableHomeScreen(navController: NavController) {
 
-    val openDialog = remember { mutableStateOf(false) }
+    var menuExpanded by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -83,11 +58,22 @@ fun ComposableHomeScreen(navController: NavController) {
                 }
             },
             actions = {
-                IconButton(onClick = { openDialog.value = true }) {
+                IconButton(onClick = { menuExpanded = true }) {
                     Icon(
                         imageVector = Icons.Default.MoreVert,
-                        contentDescription = "新建班级"
+                        contentDescription = "更多选项"
                     )
+                }
+                DropdownMenu(
+                    expanded = menuExpanded,
+                    onDismissRequest = { menuExpanded = false },
+                    modifier = Modifier.width(IntrinsicSize.Min),
+
+                    ) {
+                    DropdownMenuItem(
+                        text = { Text("班级管理") },
+                        onClick = { navController.navigate("class_management") })
+                    DropdownMenuItem(text = { Text("学生管理") }, onClick = { /*TODO*/ })
                 }
             },
             modifier = Modifier.shadow(elevation = 4.dp)
@@ -127,48 +113,12 @@ fun ComposableHomeScreen(navController: NavController) {
             }
         }
     }
-
-    when {
-        openDialog.value -> AddCourseDialog(
-            onDismissRequest = { openDialog.value = false }
-        )
-    }
-
-}
-
-@Composable
-fun AddCourseDialog(onDismissRequest: () -> Unit) {
-    Dialog(onDismissRequest = onDismissRequest ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(16.dp),
-            shape = RoundedCornerShape(24.dp)
-        ) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                // Title
-                Box(modifier = Modifier.fillMaxWidth()) {
-                    Text(
-                        text = "创建班级",
-                        fontSize = 25.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(vertical = 16.dp)
-                    )
-                }
-
-
-            }
-        }
-    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HomeScreenPreview() {
+private fun Preview() {
     MyApplicationTheme {
-        ShowHomeScreen()
+        ComposableHomeScreen(rememberNavController())
     }
 }
