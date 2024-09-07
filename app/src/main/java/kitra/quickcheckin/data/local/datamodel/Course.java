@@ -1,13 +1,12 @@
 package kitra.quickcheckin.data.local.datamodel;
 
 import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "Course")
 public class Course {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int uniqueId;
 
     @NonNull
@@ -26,11 +25,12 @@ public class Course {
         this.uniqueId = uniqueId;
     }
 
+    @NonNull
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(@NonNull String name) {
         this.name = name;
     }
 

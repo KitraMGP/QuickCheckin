@@ -4,18 +4,17 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.room.Room;
-import androidx.room.RoomDatabase;
 
 import kitra.quickcheckin.data.local.AppDatabase;
 
 public class MainApplication extends Application {
 
-    private static RoomDatabase database;
+    private static AppDatabase database;
 
-    public static RoomDatabase getDatabase(Context context) {
+    public static AppDatabase getDatabase(Context context) {
         if (database == null) {
             synchronized (AppDatabase.class) {
-                database = Room.databaseBuilder(context, AppDatabase.class, "app_database").build();
+                database = Room.databaseBuilder(context, AppDatabase.class, "app_database").fallbackToDestructiveMigration().build();
             }
         }
         return database;

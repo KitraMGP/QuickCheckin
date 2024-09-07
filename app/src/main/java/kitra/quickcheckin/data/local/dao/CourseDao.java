@@ -13,7 +13,7 @@ import kitra.quickcheckin.data.local.datamodel.Course;
 @Dao
 public interface CourseDao {
     @Insert
-    void insert(Course[] course);
+    void insert(Course... course);
 
     /**
      * 删除一个或多个课程条目
@@ -21,7 +21,7 @@ public interface CourseDao {
      * @return 成功删除的条目个数
      */
     @Delete
-    int delete(Course[] courses);
+    int delete(Course... courses);
 
     /**
      * 更新一个或多个学生条目
@@ -29,7 +29,7 @@ public interface CourseDao {
      * @return 成功更新的条目个数
      */
     @Update
-    int update(Course[] courses);
+    int update(Course... courses);
 
     @Query("SELECT * FROM Course")
     List<Course> getAll();

@@ -15,7 +15,7 @@ import kitra.quickcheckin.data.local.datamodel.StudentClassRelation;
 @Dao
 public interface StudentClassRelationDao {
     @Insert
-    void insert(StudentClassRelation[] studentClassRelations);
+    void insert(StudentClassRelation... studentClassRelations);
 
     /**
      * 删除一个或多个学生-班级关联条目
@@ -23,7 +23,7 @@ public interface StudentClassRelationDao {
      * @return 删除成功的条目个数
      */
     @Delete
-    int delete(StudentClassRelation[] studentClassRelations);
+    int delete(StudentClassRelation... studentClassRelations);
 
     /**
      * 更新一个或多个学生-班级关联条目
@@ -31,7 +31,7 @@ public interface StudentClassRelationDao {
      * @return 成功更新的条目个数
      */
     @Update
-    int update(StudentClassRelation[] studentClassRelations);
+    int update(StudentClassRelation... studentClassRelations);
 
     @RewriteQueriesToDropUnusedColumns
     @Query("SELECT * FROM Student JOIN StudentClassRelation "
