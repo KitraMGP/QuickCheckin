@@ -1,6 +1,5 @@
 package kitra.quickcheckin.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,14 +21,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -60,7 +55,6 @@ fun ComposableClassManagementScreen(navController: NavController) {
 @Composable
 private fun Show(viewModel: ClassManagementViewModel, navController: NavController) {
     val allClasses by viewModel.allClasses.observeAsState(listOf())
-    var searchText by remember { mutableStateOf("") }
     val context = LocalContext.current
 
     Column(modifier = Modifier
@@ -83,35 +77,6 @@ private fun Show(viewModel: ClassManagementViewModel, navController: NavControll
         ) {
             Button(modifier = Modifier.wrapContentSize(), onClick = { viewModel.addTest("111") }) {
                 Text("创建班级")
-            }
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            TextField(
-                value = searchText,
-                onValueChange = { searchText = it },
-                singleLine = true
-            )
-            Button(modifier = Modifier.wrapContentSize(), onClick = {
-                val num: Int
-                try {
-                    num = Integer.parseInt(searchText)
-                    viewModel.delete(
-                        num,
-                        {},
-                        { throwable ->
-                            Toast.makeText(context, throwable.message, Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                } catch (e: Exception) {
-                    Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                }
-            }) {
-                Text("删除")
             }
         }
         HorizontalDivider()

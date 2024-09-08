@@ -7,6 +7,7 @@ import androidx.navigation.compose.rememberNavController
 import kitra.quickcheckin.screens.ComposableClassManagementScreen
 import kitra.quickcheckin.screens.ComposableHomeScreen
 import kitra.quickcheckin.screens.ComposablePrepareScreen
+import kitra.quickcheckin.screens.ComposableStudentManagementScreen
 
 @Composable
 fun NavGraph() {
@@ -19,5 +20,6 @@ fun NavGraph() {
         composable("home") { ComposableHomeScreen(navController) }
         composable("prepare") { ComposablePrepareScreen(navController) }
         composable("class_management") { ComposableClassManagementScreen(navController) }
+        composable("student_management") { ComposableStudentManagementScreen(navController) }
     }
 }

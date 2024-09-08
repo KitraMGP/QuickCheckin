@@ -73,7 +73,10 @@ fun ComposableHomeScreen(navController: NavController) {
                     DropdownMenuItem(
                         text = { Text("班级管理") },
                         onClick = { navController.navigate("class_management") })
-                    DropdownMenuItem(text = { Text("学生管理") }, onClick = { /*TODO*/ })
+                    DropdownMenuItem(
+                        text = { Text("学生管理") },
+                        onClick = { navController.navigate("student_management") }
+                    )
                 }
             },
             modifier = Modifier.shadow(elevation = 4.dp)
