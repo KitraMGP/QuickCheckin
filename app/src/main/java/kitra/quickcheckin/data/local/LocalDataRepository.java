@@ -14,6 +14,7 @@ import kitra.quickcheckin.data.local.dao.CourseDao;
 import kitra.quickcheckin.data.local.dao.StudentClassRelationDao;
 import kitra.quickcheckin.data.local.dao.StudentDao;
 import kitra.quickcheckin.data.local.dao.TeachingClassDao;
+import kitra.quickcheckin.data.local.datamodel.Student;
 import kitra.quickcheckin.data.local.datamodel.TeachingClass;
 
 public class LocalDataRepository {
@@ -76,4 +77,25 @@ public class LocalDataRepository {
         return teachingClassDao.getClassByUniqueId(uniqueId);
     }
 
+    public void addStudents(@NonNull Action onComplete, @NonNull Consumer<? super Throwable> onError, Student... students) {
+        disposable.add(
+                studentDao.insert(students)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(onComplete, onError)
+        );
+    }
+
+    public void deleteStudents(@NonNull Action onComplete, @NonNull Consumer<? super Throwable> onError, Student... students) {
+        disposable.add(
+                studentDao.delete(students)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(onComplete, onError)
+        );
+    }
+
+    public LiveData<List<Student>> getAllStudents() {
+        return studentDao.getAll();
+    }
 }

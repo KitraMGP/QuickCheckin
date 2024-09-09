@@ -1,5 +1,6 @@
 package kitra.quickcheckin.data.local.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -8,12 +9,13 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import kitra.quickcheckin.data.local.datamodel.Student;
 
 @Dao
 public interface StudentDao {
     @Insert
-    void insert(Student[] students);
+    Completable insert(Student... students);
 
     /**
      * 删除一个或多个学生条目
@@ -21,7 +23,7 @@ public interface StudentDao {
      * @return 成功删除的条目数量
      */
     @Delete
-    int delete(Student[] students);
+    Completable delete(Student... students);
 
     /**
      * 更新一个或多个学生条目
@@ -29,8 +31,8 @@ public interface StudentDao {
      * @return 成功更新的条目数量
      */
     @Update
-    int update(Student[] students);
+    Completable update(Student... students);
 
     @Query("SELECT * FROM Student")
-    List<Student> getAll();
+    LiveData<List<Student>> getAll();
 }
