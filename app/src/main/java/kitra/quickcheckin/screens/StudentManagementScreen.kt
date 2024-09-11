@@ -168,14 +168,18 @@ private fun AddStudentDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             Button(onClick = {
-                viewModel.addStudent(
-                    { Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show() },
-                    { err ->
-                        Toast.makeText(context, err.localizedMessage, Toast.LENGTH_SHORT).show()
-                    },
-                    Student(0, inputStudentNumber, inputStudentName)
-                )
-                onDismiss.invoke()
+                if (inputStudentName.isEmpty() || inputStudentNumber.isEmpty()) {
+                    Toast.makeText(context, "请输入姓名和学号", Toast.LENGTH_SHORT).show()
+                } else {
+                    viewModel.addStudent(
+                        { Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show() },
+                        { err ->
+                            Toast.makeText(context, err.localizedMessage, Toast.LENGTH_SHORT).show()
+                        },
+                        Student(0, inputStudentNumber, inputStudentName)
+                    )
+                    onDismiss.invoke()
+                }
             }) {
                 Text("确定")
             }
