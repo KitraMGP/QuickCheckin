@@ -168,7 +168,7 @@ private fun AddStudentDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             Button(onClick = {
-                if (inputStudentName.isEmpty() || inputStudentNumber.isEmpty()) {
+                if (inputStudentName.isBlank() || inputStudentNumber.isBlank()) {
                     Toast.makeText(context, "请输入姓名和学号", Toast.LENGTH_SHORT).show()
                 } else {
                     viewModel.addStudent(
