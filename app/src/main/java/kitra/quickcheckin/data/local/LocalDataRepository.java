@@ -70,4 +70,8 @@ public class LocalDataRepository {
     public LiveData<List<Student>> getAllStudents() {
         return studentDao.getAll();
     }
+
+    public LiveData<Integer> getStudentCount() {
+        return studentDao.getStudentCount();
+    }
 }

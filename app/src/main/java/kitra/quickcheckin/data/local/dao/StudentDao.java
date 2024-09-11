@@ -35,4 +35,7 @@ public interface StudentDao {
 
     @Query("SELECT * FROM Student")
     LiveData<List<Student>> getAll();
+
+    @Query("SELECT COUNT(*) FROM Student")
+    LiveData<Integer> getStudentCount();
 }
