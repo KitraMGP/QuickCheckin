@@ -168,6 +168,7 @@ private fun AddStudentDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             Button(onClick = {
+                // 如果有字段是空字符串或全为空字符，则拒绝创建学生
                 if (inputStudentName.isBlank() || inputStudentNumber.isBlank()) {
                     Toast.makeText(context, "请输入姓名和学号", Toast.LENGTH_SHORT).show()
                 } else {
@@ -176,7 +177,8 @@ private fun AddStudentDialog(
                         { err ->
                             Toast.makeText(context, err.localizedMessage, Toast.LENGTH_SHORT).show()
                         },
-                        Student(0, inputStudentNumber, inputStudentName)
+                        // 如果用户在学号、姓名前后输入了多余的空格，则自动删去这些空格
+                        Student(0, inputStudentNumber.trim(), inputStudentName.trim())
                     )
                     onDismiss.invoke()
                 }
