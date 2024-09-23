@@ -1,6 +1,6 @@
 [versions]
 agp = "8.5.2"
-gradle = "8.5.1"
+gradle = "8.5.2"
 kotlin = "1.9.0"
 junit = "4.13.2"
 mlComputerVisionFace = "3.11.0.301"
@@ -18,12 +18,12 @@ commonsLang3 = "3.17.0"
 agconnect = "1.9.1.301" # 华为AGC核心库
 agcp = "1.9.1.301"  # 华为Gradle插件
 huaweiMlComputerVisionFaceverify = "3.11.0.302"
-cameraCore = "1.4.0-rc01"
-cameraCamera2 = "1.4.0-rc01"
-cameraLifecycle = "1.4.0-rc01"
-cameraVideo = "1.4.0-rc01"
-cameraView = "1.4.0-rc01"
-cameraExtensions = "1.4.0-rc01"
+cameraCore = "1.4.0-rc02"
+cameraCamera2 = "1.4.0-rc02"
+cameraLifecycle = "1.4.0-rc02"
+cameraVideo = "1.4.0-rc02"
+cameraView = "1.4.0-rc02"
+cameraExtensions = "1.4.0-rc02"
 accompanistPermissions = "0.36.0" # 华为人脸识别
 
 [libraries]
