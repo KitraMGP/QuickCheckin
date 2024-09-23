@@ -63,7 +63,7 @@ private fun Show(viewModel: ClassManagementViewModel, navController: NavControll
         TopAppBar(
             title = { Text("班级管理") },
             navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = { navController.popBackStack("home", false) }) {
                     Icon(Icons.AutoMirrored.Default.ArrowBack, "返回")
                 }
             },

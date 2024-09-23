@@ -5,6 +5,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.huawei.agconnect.AGConnectInstance;
+
 import kitra.quickcheckin.data.local.AppDatabase;
 
 public class MainApplication extends Application {
@@ -23,5 +25,8 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (AGConnectInstance.getInstance() == null) {
+            AGConnectInstance.initialize(getApplicationContext());
+        }
     }
 }

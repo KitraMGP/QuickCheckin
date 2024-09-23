@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.huawei.agconnect")
 }
 
 android {
@@ -71,12 +72,36 @@ dependencies {
     implementation(libs.rxjava)
     implementation(libs.rxandroid)
     implementation(libs.commons.lang3)
+    implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.androidx.camera.video)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.camera.extensions)
+    implementation(libs.accompanist.permissions)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     annotationProcessor(libs.androidx.room.compiler)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // 华为库开始
+    implementation(libs.huawei.agconnect)
+    // 人脸比对
+    implementation(libs.huawei.faceverify)
+    implementation(libs.huawei.faceverify.model)
+    // 人脸检测
+    // 引入基础SDK
+    implementation(libs.huawei.face)
+    // 引入人脸轮廓+关键点检测模型包
+    implementation(libs.huawei.face.shape.point.model)
+    // 引入表情检测模型包
+    implementation(libs.huawei.face.emotion.model)
+    // 引入特征检测模型包
+    implementation(libs.huawei.face.feature.model)
+    // 引入3d检测模型包
+    implementation(libs.huawei.face3d.model)
+    // 华为库结束
 }

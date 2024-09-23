@@ -74,7 +74,7 @@ fun ComposableStudentManagementScreen(navController: NavController) {
         TopAppBar(
             title = { Text("学生管理") },
             navigationIcon = {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = { navController.popBackStack("home", false) }) {
                     Icon(Icons.AutoMirrored.Default.ArrowBack, "返回")
                 }
             },
