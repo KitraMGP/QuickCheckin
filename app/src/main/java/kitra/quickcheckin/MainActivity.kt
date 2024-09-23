@@ -10,9 +10,9 @@ import kitra.quickcheckin.themes.MyApplicationTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            MyApplicationTheme {
+        enableEdgeToEdge()  //界面初始化模板
+        setContent {    //界面内容
+            MyApplicationTheme {    //方法
                 NavGraph()
             }
         }
