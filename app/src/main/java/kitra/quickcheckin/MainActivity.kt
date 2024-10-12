@@ -11,6 +11,9 @@ import kitra.quickcheckin.themes.MyApplicationTheme
  * 应用的主 Activity，这是一个支持 Compose 的 Activity
  */
 class MainActivity : ComponentActivity() {
+    /**
+     * Activity 创建的时候调用的的方法，也就是应用界面启动时调用的方法
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 启用边缘到边缘模式
