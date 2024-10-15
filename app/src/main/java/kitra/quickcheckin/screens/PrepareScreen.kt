@@ -13,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -21,22 +20,20 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import kitra.quickcheckin.components.DefaultTopAppBar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ComposablePrepareScreen(navController: NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(
+        DefaultTopAppBar(
             title = { Text("请确认签到信息") },
             navigationIcon = {
                 IconButton(onClick = {
@@ -47,8 +44,7 @@ fun ComposablePrepareScreen(navController: NavController) {
                         contentDescription = "菜单"
                     )
                 }
-            },
-            modifier = Modifier.shadow(elevation = 4.dp)
+            }
         )
         // 界面内容,可滚动
         Column(
