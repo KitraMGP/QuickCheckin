@@ -1,47 +1,42 @@
 package kitra.quickcheckin.viewmodels
 
-import android.util.Log
-import android.util.SparseArray
+import android.graphics.Bitmap
 import androidx.camera.core.ImageProxy
-import androidx.core.util.forEach
 import androidx.lifecycle.ViewModel
 import com.huawei.hms.mlsdk.common.MLFrame
-import com.huawei.hms.mlsdk.faceverify.MLFaceVerificationAnalyzer
-import com.huawei.hms.mlsdk.faceverify.MLFaceVerificationAnalyzerFactory
-import com.huawei.hms.mlsdk.faceverify.MLFaceVerificationAnalyzerSetting
-import com.huawei.hms.mlsdk.faceverify.MLFaceVerificationResult
+import kitra.quickcheckin.core.face.impl.HMSFaceSearchEngine
 
 class FaceRecognitionDemoScreenViewModel: ViewModel() {
-    private lateinit var faceVerificationAnalyzer: MLFaceVerificationAnalyzer
-    private lateinit var templateFace: MLFrame
-    private var templateSet = false
+    private lateinit var faceSearchEngine: HMSFaceSearchEngine
+    private var newFaceId = 0
 
     init {
         initialize()
     }
 
-    private fun initialize(): Unit {
-        faceVerificationAnalyzer = MLFaceVerificationAnalyzerFactory.getInstance().getFaceVerificationAnalyzer(
-            MLFaceVerificationAnalyzerSetting.Factory().setMaxFaceDetected(1).create())
+    private fun initialize() {
+        faceSearchEngine = HMSFaceSearchEngine()
+        faceSearchEngine.init()
     }
 
-    fun setTemplateFace(template: MLFrame): Boolean {
-        templateFace = template
-        val num = faceVerificationAnalyzer.setTemplateFace(templateFace).size
-        templateSet = num > 0
-        return templateSet
+    fun addTemplateFace(template: Bitmap): Int {
+        val success = faceSearchEngine.addFaceTemplate(newFaceId, template)
+        if(success) {
+            newFaceId++
+            return newFaceId - 1
+        } else {
+            return -1
+        }
     }
 
-    fun analyze(image: ImageProxy): SparseArray<MLFaceVerificationResult> {
-        if(!templateSet) return SparseArray<MLFaceVerificationResult>()
-        val frame = MLFrame.fromBitmap(MLFrame.rotate(image.toBitmap(), image.imageInfo.rotationDegrees / 90))
-        val results = faceVerificationAnalyzer.analyseFrame(frame)
-        results.forEach { _, value ->  Log.i("FaceVerification", "Face: ${value.templateId}, Similarity: ${value.similarity}")}
-        return results
+    fun analyze(image: ImageProxy): Int {
+        val frame = MLFrame.rotate(image.toBitmap(), image.imageInfo.rotationDegrees / 90)
+        val result = faceSearchEngine.analyze(frame)
+        return if(result.found) result.faceId else -1
     }
 
     override fun onCleared() {
         super.onCleared()
-        faceVerificationAnalyzer.stop()
+        faceSearchEngine.destroy()
     }
 }

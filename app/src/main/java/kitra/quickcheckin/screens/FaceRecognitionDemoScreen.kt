@@ -1,10 +1,9 @@
 package kitra.quickcheckin.screens
 
 import android.Manifest
-import android.content.Context
 import android.net.Uri
 import android.util.Log
-import android.util.SparseArray
+import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -21,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -31,7 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -49,11 +47,9 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.huawei.hms.mlsdk.common.MLFrame
-import com.huawei.hms.mlsdk.faceverify.MLFaceVerificationResult
 import kitra.quickcheckin.components.DefaultTopAppBar
 import kitra.quickcheckin.themes.MyApplicationTheme
 import kitra.quickcheckin.viewmodels.FaceRecognitionDemoScreenViewModel
-import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 /**
@@ -91,24 +87,12 @@ fun ComposableFaceRecognitionDemoScreen(navController: NavController) {
         previewView.controller = cameraController
     }
 
-    /* 人脸识别 */
-    var templateSet by remember { mutableStateOf(false) }
-    // 存储识别结果
-    var faceVerificationResultList by remember { mutableStateOf(SparseArray<MLFaceVerificationResult>()) }
+    /* 人脸识别结果 */
+    var faceId by remember { mutableIntStateOf(-1) }
 
     /* CameraX 分析接口 */
     cameraController?.setImageAnalysisAnalyzer(executor) { image ->
-        if (templateSet) {
-            val results = viewModel.analyze(image)
-            for (i in 0 until results.size()) {
-                Log.d(
-                    "FaceVerification",
-                    "Id: ${results[i].templateId}, Similarity: ${results[i].similarity}"
-                )
-            }
-            faceVerificationResultList = results
-        }
-        Thread.sleep(100)
+        faceId = viewModel.analyze(image)
         image.close()
     }
 
@@ -117,7 +101,8 @@ fun ComposableFaceRecognitionDemoScreen(navController: NavController) {
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
                 Log.d("PhotoPicker", "photo:$uri")
-                templateSet = viewModel.setTemplateFace(MLFrame.fromFilePath(context, uri))
+                val r = viewModel.addTemplateFace(MLFrame.fromFilePath(context, uri).readBitmap())
+                Toast.makeText(context, if(r >= 0) "成功，faceId=${r}" else "失败", Toast.LENGTH_SHORT).show()
             } else {
                 Log.d("PhotoPicker", "None")
             }
@@ -143,16 +128,13 @@ fun ComposableFaceRecognitionDemoScreen(navController: NavController) {
         Column {
             // 摄像头预览组件
             // 权限功能在Preview中不可用
-            if (!isInPreview && cameraController != null) {
+            if (!isInPreview) {
                 // 权限授予后的行为
                 if (permissionState!!.status.isGranted) {
                     CameraView(
-                        cameraController,
                         previewView,
-                        executor,
-                        context,
                         imagePickerLauncher,
-                        faceVerificationResultList
+                        faceId
                     )
                 } else {
                     Button(onClick = {
@@ -168,12 +150,9 @@ fun ComposableFaceRecognitionDemoScreen(navController: NavController) {
 
 @Composable
 private fun CameraView(
-    cameraController: LifecycleCameraController,
     previewView: PreviewView,
-    executor: Executor,
-    context: Context,
     imagePickerLauncher: ManagedActivityResultLauncher<PickVisualMediaRequest, Uri?>,
-    faceVerificationResultList: SparseArray<MLFaceVerificationResult>
+    faceId: Int
 ) {
     Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         // 相机预览
@@ -198,21 +177,8 @@ private fun CameraView(
                 Text("导入人脸照片")
             }
         }
-
-        Text(
-            "结果数量：${faceVerificationResultList.size()}",
-            color = MaterialTheme.colorScheme.onBackground
-        )
-
-        LazyColumn {
-            items(faceVerificationResultList.size()) {
-                run {
-                    Text(
-                        text = "人脸：${faceVerificationResultList[it].templateId}，相似度：${faceVerificationResultList[it].similarity}",
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                }
-            }
+        if(faceId >= 0) {
+            Text(text = "识别到人脸，faceId=${faceId}", color = MaterialTheme.colorScheme.onBackground)
         }
     }
 }
